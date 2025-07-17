@@ -1,16 +1,10 @@
-import Elysia from "elysia";
-import Routes from "./route";
+import { Elysia } from 'elysia';
+import { cors } from '@elysiajs/cors';
+import { setupRoutes } from './routes/suratRoute';
 
-// intial elysia 
-const app = new Elysia();
+const app = new Elysia()
+  .use(cors())
+  .use(setupRoutes)
+  .listen(3000);
 
-// route home 
-app.get('/',()=> 'Hello Home');
-
-// add route
-app.group('/api',(app)=>app.use(Routes));
-
-// start server on port 3000
-app.listen(3000);
-
-console.log(`Running on http://${app.server?.hostname}:${app.server?.port}`);
+console.log(`Server running at http://localhost:${app.server?.port}`);
